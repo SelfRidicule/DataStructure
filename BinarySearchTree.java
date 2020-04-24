@@ -1,4 +1,4 @@
-package com.ssm.controller.tree;
+package com.zhongzhou.controller.base;
 
 import java.util.Comparator;
 
@@ -155,6 +155,80 @@ public class BinarySearchTree<E>{
             return this.comparator.compare(e1 , e2);
         }else{
             return ((Comparable<E>) e1).compareTo(e2);
+        }
+    }
+
+    /**
+     * 输出二叉树所有的值
+     */
+    public void printTree(){
+
+        Node<E> node = getRootNode();
+
+        while (node != null){
+            //输出当前节点元素
+            System.out.print(node.getElement().toString());
+
+            //父节点
+            Node<E> parentNode = node.parent;
+
+            //根节点
+            if(parentNode == null){
+                if(node.left != null){
+                    node = node.left;
+                }else{
+                    node = node.right;
+                }
+                System.out.println();
+                continue;
+            }
+
+            //当前节点是叶子节点
+            if(node.left == null && node.right == null){
+
+                //当前节点是父节点的==>>左子节点
+                int compareValue = compareElement(node.element , parentNode.element);
+                if(compareValue < 0){
+                    node = parentNode.right;
+                    System.out.println();
+                    continue;
+
+                    //当前节点是父节点的==>>右子节点
+                }else{
+
+                    node = getRightParentNode(node);
+                    System.out.println();
+                    continue;
+                }
+
+
+                //有左子节点
+            }else if(node.left != null){
+                node = node.left;
+                System.out.println();
+                continue;
+
+                //右子节点
+            }else if(node.right != null){
+                node = node.right;
+                System.out.println();
+                continue;
+            }
+        }
+    }
+
+    /**
+     * 递归查找
+     */
+    Node<E> getRightParentNode(Node<E> node){
+        //父节点
+        Node<E> parentNode = node.parent;
+        //如果是左子树就返回右子树
+        int compareValue = compareElement(node.element , parentNode.element);
+        if(compareValue < 0){
+            return parentNode.right;
+        }else{
+            return getRightParentNode(parentNode);
         }
     }
 
