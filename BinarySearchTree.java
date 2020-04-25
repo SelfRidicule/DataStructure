@@ -161,6 +161,7 @@ public class BinarySearchTree<E>{
 
     /**
      * 前序遍历
+     * 根节点==>>左子树==>>右子树
      */
     public void preorderTraversal(){
         preorderTraversal(getRootNode());
@@ -173,11 +174,33 @@ public class BinarySearchTree<E>{
         //输出当前节点信息
         System.out.println(node.element.toString());
 
-        //输出当前节点的左子节点
+        //循环当前节点的左子节点
         preorderTraversal(node.left);
-        //输出当前节点的右子节点
+        //循环当前节点的右子节点
         preorderTraversal(node.right);
     }
+
+    /**
+     * 中序遍历
+     * 左子树==>>根节点==>>右子树
+     */
+    public void inorderTraversal(){
+        inorderTraversal(getRootNode());
+    }
+    private void inorderTraversal(Node<E> node){
+        //如果当前节点为null说明父节点是叶子节点，不用再进行遍历
+        if(node == null){
+            return ;
+        }
+        //循环查找当前节点的左子节点
+        inorderTraversal(node.left);
+        //输出当前节点信息
+        System.out.println(node.element.toString());
+        //循环查找当前节点的右子节点
+        inorderTraversal(node.right);
+    }
+
+
 
     /**
      * 输出二叉树所有的值
