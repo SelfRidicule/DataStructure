@@ -1,4 +1,4 @@
-package com.zhongzhou.controller.base;
+package com.ssm.controller.tree;
 
 import java.util.Comparator;
 
@@ -86,6 +86,7 @@ public class BinarySearchTree<E>{
 
             //相等
             }else{
+                node.element = element;
                 return ;
             }
         }
