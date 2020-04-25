@@ -159,6 +159,8 @@ public class BinarySearchTree<E>{
         }
     }
 
+
+
     /**
      * 输出二叉树所有的值
      */
@@ -194,22 +196,24 @@ public class BinarySearchTree<E>{
                     System.out.println();
                     continue;
 
-                    //当前节点是父节点的==>>右子节点
-                }else{
-
+                //当前节点是父节点的==>>右子节点
+                }else if(compareValue > 0){
                     node = getRightParentNode(node);
                     System.out.println();
                     continue;
+
+                //不会存在相同的值
+                }else{
+                    return ;
                 }
 
-
-                //有左子节点
+            //有左子节点
             }else if(node.left != null){
                 node = node.left;
                 System.out.println();
                 continue;
 
-                //右子节点
+            //右子节点
             }else if(node.right != null){
                 node = node.right;
                 System.out.println();
@@ -224,6 +228,11 @@ public class BinarySearchTree<E>{
     Node<E> getRightParentNode(Node<E> node){
         //父节点
         Node<E> parentNode = node.parent;
+        //如果没有父节点判定所有节点遍历结束
+        if(parentNode == null){
+            return null;
+        }
+
         //如果是左子树就返回右子树
         int compareValue = compareElement(node.element , parentNode.element);
         if(compareValue < 0){
