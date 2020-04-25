@@ -159,7 +159,25 @@ public class BinarySearchTree<E>{
         }
     }
 
+    /**
+     * 前序遍历
+     */
+    public void preorderTraversal(){
+        preorderTraversal(getRootNode());
+    }
+    private void preorderTraversal(Node<E> node){
+        //如果当前节点为null说明父节点是叶子节点，不用再进行遍历
+        if(node == null){
+            return ;
+        }
+        //输出当前节点信息
+        System.out.println(node.element.toString());
 
+        //输出当前节点的左子节点
+        preorderTraversal(node.left);
+        //输出当前节点的右子节点
+        preorderTraversal(node.right);
+    }
 
     /**
      * 输出二叉树所有的值
