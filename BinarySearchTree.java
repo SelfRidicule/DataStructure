@@ -161,7 +161,7 @@ public class BinarySearchTree<E>{
 
     /**
      * 前序遍历
-     * 根节点==>>左子树==>>右子树
+     * 根节点==>>左子节点==>>右子节点
      */
     public void preorderTraversal(){
         preorderTraversal(getRootNode());
@@ -182,7 +182,7 @@ public class BinarySearchTree<E>{
 
     /**
      * 中序遍历
-     * 左子树==>>根节点==>>右子树
+     * 左子节点==>>根节点==>>右子节点
      */
     public void inorderTraversal(){
         inorderTraversal(getRootNode());
@@ -200,6 +200,26 @@ public class BinarySearchTree<E>{
         inorderTraversal(node.right);
     }
 
+    /**
+     * 后序遍历
+     * 左子节点==>>右子节点==>>根节点
+     */
+    public void postorderTraversal(){
+        postorderTraversal(getRootNode());
+    }
+    private void postorderTraversal(Node<E> node){
+        //如果当前节点为null说明父节点是叶子节点，不用再进行遍历
+        if(node == null){
+            return ;
+        }
+
+        //循环查找当前节点的左子节点
+        postorderTraversal(node.left);
+        //循环查找当前节点的右子节点
+        postorderTraversal(node.right);
+        //输出当前节点信息
+        System.out.println(node.element.toString());
+    }
 
 
     /**
