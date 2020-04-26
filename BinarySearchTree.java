@@ -1,4 +1,4 @@
-package com.zhongzhou.controller.base;
+package com.ssm.controller.tree;
 
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -206,21 +206,23 @@ public class BinarySearchTree<E>{
      * 后序遍历
      * 左子节点==>>右子节点==>>根节点
      */
-    public void postorderTraversal(){
-        postorderTraversal(getRootNode());
+    public void postorderTraversal(Visitor<E> visitor){
+        postorderTraversal(getRootNode(),visitor);
     }
-    private void postorderTraversal(Node<E> node){
+    private void postorderTraversal(Node<E> node, Visitor<E> visitor){
         //如果当前节点为null说明父节点是叶子节点，不用再进行遍历
-        if(node == null){
+        if(node == null || visitor == null || visitor.stop){
             return ;
         }
 
         //循环查找当前节点的左子节点
-        postorderTraversal(node.left);
+        postorderTraversal(node.left , visitor);
         //循环查找当前节点的右子节点
-        postorderTraversal(node.right);
+        postorderTraversal(node.right , visitor);
+        //判断是否停止
+        if(visitor.stop){ return; }
         //输出当前节点信息
-        System.out.println(node.element.toString());
+        visitor.stop = visitor.visit(node.element);
     }
 
 
@@ -229,9 +231,9 @@ public class BinarySearchTree<E>{
      * 从上到下，从左到右依次访问每个节点
      */
     public void levelOrderTraversal(){
-        levelOrderTraversal(getRootNode());
-    }
-    private void levelOrderTraversal(Node<E> rootNode){
+        //根节点
+        Node<E> rootNode = getRootNode();
+
         //如果当前节点为null说明父节点是叶子节点，不用再进行遍历
         if(rootNode == null){
             return ;
@@ -345,7 +347,7 @@ public class BinarySearchTree<E>{
     /**
      * 节点类
      */
-    public class Node<E>{
+    public static class Node<E>{
 
         public Node(E element, Node<E> parent) {
             this.element = element;
@@ -360,6 +362,21 @@ public class BinarySearchTree<E>{
         public E getElement(){
             return element;
         }
+    }
+
+    /**
+     *  输出抽象类
+     */
+    public abstract static class Visitor <E>{
+        /**
+         *  是否停止
+         */
+        boolean stop = false;
+
+        /**
+         * 输出
+         */
+        abstract boolean visit(E element);
     }
 
 }
