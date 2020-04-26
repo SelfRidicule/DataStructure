@@ -1,6 +1,8 @@
-package com.ssm.controller.tree;
+package com.zhongzhou.controller.base;
 
 import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.Queue;
 
 /**
  * 二叉搜索树
@@ -219,6 +221,43 @@ public class BinarySearchTree<E>{
         postorderTraversal(node.right);
         //输出当前节点信息
         System.out.println(node.element.toString());
+    }
+
+
+    /**
+     * 层序遍历
+     * 从上到下，从左到右依次访问每个节点
+     */
+    public void levelOrderTraversal(){
+        levelOrderTraversal(getRootNode());
+    }
+    private void levelOrderTraversal(Node<E> rootNode){
+        //如果当前节点为null说明父节点是叶子节点，不用再进行遍历
+        if(rootNode == null){
+            return ;
+        }
+
+        //创建队列
+        Queue<Node<E>> queue = new LinkedList<>();
+        //向队列添加根节点
+        queue.offer(rootNode);
+
+        //判断队列是否为null
+        while(!queue.isEmpty()){
+            //得到队列第一个节点，并且删除队列第一个节点
+            Node<E> node = queue.poll();
+            //输出当前节点信息
+            System.out.println(node.element.toString());
+
+            //如果左子节点不为null则添加到队列
+            if(node.left != null){
+                queue.offer(node.left);
+            }
+            //如果右子节点不为null则添加到队列
+            if(node.right != null){
+                queue.offer(node.right);
+            }
+        }
     }
 
 
