@@ -1,5 +1,8 @@
 package com.ssm.controller.tree;
 
+import com.alibaba.druid.sql.ast.statement.SQLUnionQuery;
+
+import javax.validation.constraints.Max;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -342,6 +345,63 @@ public class BinarySearchTree<E>{
         }else{
             return getRightParentNode(parentNode);
         }
+    }
+
+    /**
+     * 二叉树的高度
+     */
+    public int height(){
+        return height(getRootNode() , 0);
+    }
+    private int height(Node<E> node , int level){
+        if(node == null){
+            return level;
+        }
+        return Math.max(height(node.left, level+1) , height(node.right,level+1));
+    }
+
+    /**
+     * 队列-高度
+     */
+    public int queueHeight(){
+        //根节点
+        Node<E> rootNode = getRootNode();
+
+        //如果当前节点为null说明父节点是叶子节点，不用再进行遍历
+        if(rootNode == null){
+            return 0;
+        }
+
+        //高度
+        int height = 0;
+        //当前层级的节点总数
+        int levelSize = 1;
+        //创建队列
+        Queue<Node<E>> queue = new LinkedList<>();
+        //向队列添加节点
+        queue.offer(rootNode);
+
+        //判断队列是否有数据
+        while (!queue.isEmpty()){
+            //拿取队列第一个 并移除
+            Node<E> node = queue.poll();
+            levelSize--;
+            //向队列添加左子节点
+            if(node.left != null){
+                queue.offer(node.left);
+            }
+            //向队列添加右子节点
+            if(node.right != null){
+                queue.offer(node.right);
+            }
+            //当前层级节点遍历结束==>>就遍历下一层节点
+            if(levelSize == 0){
+                levelSize = queue.size();
+                height++;
+            }
+        }
+
+        return height;
     }
 
     @Override
