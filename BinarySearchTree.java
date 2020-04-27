@@ -446,7 +446,12 @@ public class BinarySearchTree<E>{
 
             //后面遍历的节点都是叶子节点
             }else{
+                //设置判断状态为叶子节点
                 leaf = true;
+                //如果左子节点不是null就添加到队列
+                if(node.left != null){
+                    queue.offer(node.left);
+                }
             }
         }
 
