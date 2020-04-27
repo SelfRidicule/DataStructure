@@ -459,6 +459,55 @@ public class BinarySearchTree<E>{
         return true;
     }
 
+    /**
+     * 优化判断完全二叉树
+     */
+    public boolean isCompleteBinaryTreeOptimize(){
+        if(getRootNode() == null){
+            return false;
+        }
+
+        //创建队列
+        Queue<Node<E>> queue = new LinkedList<>();
+        //向队列添加节点
+        queue.offer(getRootNode());
+
+        //是否是叶子节点
+        boolean leaf = false;
+
+        //判断队列是否有数据
+        while (!queue.isEmpty()){
+            //获取队列第一个，并且移除
+            Node<E> node = queue.poll();
+
+            //判断是否必须是叶子节点,如果不是就判定不是完全二叉树
+            if(leaf && !node.isLeaf()){
+                return false;
+            }
+
+            //有左子节点
+            if(node.left != null){
+                queue.offer(node.left);
+
+            //没有左子节点但是有右子节点
+            }else if(node.right != null){
+                return false;
+            }
+
+            //有右子节点
+            if(node.right != null){
+                queue.offer(node.right);
+
+            //没有左子节点 或者 没有右子节点
+            }else{
+                leaf = true;
+            }
+        }
+
+        //判定是完全二叉树
+        return true;
+    }
+
     @Override
     public String toString() {
         StringBuffer sf = new StringBuffer();
