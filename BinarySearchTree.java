@@ -404,6 +404,56 @@ public class BinarySearchTree<E>{
         return height;
     }
 
+    /**
+     * 是否是-完全二叉树
+     *
+     * 如果树为null返回false
+     * 如果左子节点和右子节点都不为null就添加到队列
+     * 如果左子节点为null，并且右子节点不为null就不是完全二叉树
+     * 如果左子节点不为null，并且右子节点为null 。或者。 左子节点和右子节点都是null。 那么后面遍历的都应该是叶子节点
+     */
+    public boolean isCompleteBinaryTree(){
+        if(getRootNode() == null){
+            return false;
+        }
+
+        //创建队列
+        Queue<Node<E>> queue = new LinkedList<>();
+        //向队列添加节点
+        queue.offer(getRootNode());
+
+        //是否是叶子节点
+        boolean leaf = false;
+
+        //判断队列是否有数据
+        while (!queue.isEmpty()){
+            //获取队列第一个，并且移除
+            Node<E> node = queue.poll();
+
+            //判断是否必须是叶子节点,如果不是就判定不是完全二叉树
+            if(leaf && !node.isLeaf()){
+                return false;
+            }
+
+            //左右子节点不等于null
+            if(node.ownTwoChildren()){
+                queue.offer(node.left);
+                queue.offer(node.right);
+
+            //左子节点为null并且右子节点不为null就判定不是完全二叉树
+            }else if(node.left == null && node.right != null){
+                return false;
+
+            //后面遍历的节点都是叶子节点
+            }else{
+                leaf = true;
+            }
+        }
+
+        //判定是完全二叉树
+        return true;
+    }
+
     @Override
     public String toString() {
         StringBuffer sf = new StringBuffer();
@@ -436,6 +486,20 @@ public class BinarySearchTree<E>{
 
         public E getElement(){
             return element;
+        }
+
+        /**
+         *  是否是叶子节点
+         */
+        public boolean isLeaf(){
+            return left == null && right == null ;
+        }
+
+        /**
+         *  拥有左右子节点
+         */
+        public boolean ownTwoChildren(){
+            return left != null && right != null ;
         }
     }
 
