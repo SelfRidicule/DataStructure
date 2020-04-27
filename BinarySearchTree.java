@@ -344,6 +344,21 @@ public class BinarySearchTree<E>{
         }
     }
 
+    @Override
+    public String toString() {
+        StringBuffer sf = new StringBuffer();
+        toString(getRootNode() , sf , "");
+        return sf.toString();
+    }
+    private void toString(Node<E> node , StringBuffer sf , String prefix){
+        if(node == null){
+            return;
+        }
+        toString(node.left , sf , prefix+"L---");
+        sf.append(prefix).append(node.element.toString()).append("\n");
+        toString(node.right , sf , prefix+"R---");
+    }
+
     /**
      * 节点类
      */
