@@ -572,6 +572,37 @@ public class BinarySearchTree<E>{
         }
     }
 
+    /**
+     * 前驱节点
+     * 中序遍历时的前一个节点
+     */
+    public void predecessorNode(Node<E> node){
+        //判断是否有前驱节点
+        if(node == null || node.left == null){
+            System.out.println("传递节点是null 或 传递节点没有前驱节点");
+            return ;
+        }
+
+        //父节点
+        Node<E> parentNode = node.left;
+
+        //默认从传递节点==>>左子节点==>>右子节点
+        node = node.left.right;
+
+        //一直循环
+        while (true){
+            //节点为null直接退出循环
+            if(node == null){
+                System.out.println("传递节点的前驱节点是 : " + parentNode.element.toString());
+                break;
+            }
+            //把当前节点，赋值给父节点
+            parentNode = node;
+            //把当前节点的右子节点，赋值给当前节点
+            node = node.right;
+        }
+    }
+
 
     @Override
     public String toString() {
