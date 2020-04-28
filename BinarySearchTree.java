@@ -508,6 +508,71 @@ public class BinarySearchTree<E>{
         return true;
     }
 
+    /**
+     * 前序递归-翻转二叉树
+     */
+    public void preorderTurnTree(){
+        preorderTurnTree(getRootNode());
+    }
+    private void preorderTurnTree(Node<E> node){
+        //当前节点如果为null就退出
+        if(node == null){
+            return ;
+        }
+
+        //左子节点
+        Node<E> leftNode = node.left;
+        //右子节点
+        Node<E> rightNode = node.right;
+
+        //左右子节点对调
+        node.left = rightNode;
+        node.right = leftNode;
+
+        //递归对调节点
+        preorderTurnTree(node.left);
+        preorderTurnTree(node.right);
+    }
+
+    /**
+     * 层序-翻转二叉树
+     */
+    public void levelTurnTree(){
+        //如果没有根节点直接退出
+        if(getRootNode() == null){
+            return ;
+        }
+        //创建队列
+        Queue<Node<E>> queue = new LinkedList<>();
+        //向队列添加节点
+        queue.offer(getRootNode());
+
+        //如果队列不为null
+        while (!queue.isEmpty()){
+            //拿取第一个，并且移除
+            Node<E> node = queue.poll();
+
+            //左子节点
+            Node<E> leftNode = node.left;
+            //右子节点
+            Node<E> rightNode = node.right;
+
+            //左右子节点对调
+            node.left = rightNode;
+            node.right = leftNode;
+
+            //如果左子节点不为null就添加到队列
+            if(node.left != null){
+                queue.offer(node.left);
+            }
+            //如果右子节点不为null就添加到队列
+            if(node.right != null){
+                queue.offer(node.right);
+            }
+        }
+    }
+
+
     @Override
     public String toString() {
         StringBuffer sf = new StringBuffer();
