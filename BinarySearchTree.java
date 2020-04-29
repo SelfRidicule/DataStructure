@@ -616,7 +616,7 @@ public class BinarySearchTree<E>{
             //父节点
             Node<E> parentNode = node.left;
 
-            //默认从传递节点==>>左子节点==>>右子节点
+            //默认从传递节点==>>左子节点==>>右子节点...
             node = node.left.right;
 
             //一直循环
@@ -633,6 +633,69 @@ public class BinarySearchTree<E>{
             }
         }
 
+    }
+
+    /**
+     * 后继节点
+     * 中序遍历时的后一个节点
+     */
+    public void successorNode(Node<E> node){
+        //传递节点是null ，或者根节点
+        if(node == null || node.parent == null){
+            System.out.println("传递节点是null，或者是根节点");
+            return ;
+        }
+
+        //输出传递节点的信息
+        System.out.println("传递的节点是 : " + node.element.toString());
+
+        //右子节点为null
+        if(node.right == null){
+
+            //右子节点为null，后继节点就是父节点，但父节点的左子节点必须是当前节点,不然就继续向上找
+            //父节点
+            Node<E> parentNode = node.parent;
+
+            //一直循环
+            while (true){
+                //父节点为null就没有后继节点
+                if(parentNode == null){
+                    System.out.println("没有后继节点");
+                    return;
+                }
+                //父节点的左子节点是当前节点，那么父节点就是后继节点
+                if(parentNode.left == node){
+                    System.out.println("传递节点的后继节点是 : " + parentNode.element.toString());
+                    return;
+                }
+
+                //当前节点赋值父节点
+                node = parentNode;
+                //父节点赋值父节点的父节点
+                parentNode = parentNode.parent;
+            }
+
+        }else{
+            //父节点
+            Node<E> parentNode = node.right;
+
+            //默认从传递节点==>>右子节点==>>左子节点...
+            node = node.right.left;
+
+            //一直循环
+            while (true){
+                //当前节点为null就直接退出
+                if(node == null){
+                    System.out.println("传递节点的后继节点是 : " + parentNode.element.toString());
+                    return ;
+                }
+
+                //把当前节点赋值给父节点
+                parentNode = node;
+                //把当前节点的左子节点，赋给当前节点
+                node = node.left;
+            }
+        }
 
     }
 
