@@ -578,7 +578,7 @@ public class BinarySearchTree<E>{
      */
     public void predecessorNode(Node<E> node){
         //当前节点是null，或者是根节点
-        if(node == null || node == getRootNode()){
+        if(node == null || node.parent == null){
             System.out.println("传递节点是null，或者是根节点");
             return ;
         }
