@@ -115,16 +115,57 @@ public class BinarySearchTree<E>{
     /**
      * 删除指定元素
      */
-    void remove(E element){
-
+    public void remove(E element){
+        remove(getNode(element));
     }
 
     /**
-     * 删除指定下标的元素
+     * 删除指定节点
      */
-    void remove(int index){
+    public void remove(Node<E> node){
+        //传递节点为null
+        if(node == null){
+            System.out.println("传递的节点是null");
+            return;
+        }
 
+
+
+        //总数-1
+        size--;
     }
+
+    /**
+     * 通过传递的元素得到对应的节点
+     */
+    private Node<E> getNode(E element){
+        //从根节点开始遍历
+        Node<E> node = getRootNode();
+
+        //节点不为null
+        while (node != null){
+            //比较元素
+            int compareValue = compareElement(element ,node.element);
+            //如果相等
+            if(compareValue == 0){
+                return node;
+            }
+            //传递元素大于当前节点元素
+            if(compareValue > 0){
+                node = node.right;
+                continue;
+
+            //传递元素小于当前节点元素
+            }else{
+                node = node.left;
+                continue;
+            }
+        }
+
+        //没有匹配到
+        return null;
+    }
+
 
     /**
      * 得到跟节点
@@ -576,11 +617,11 @@ public class BinarySearchTree<E>{
      * 前驱节点
      * 中序遍历时的前一个节点
      */
-    public void predecessorNode(Node<E> node){
+    public Node<E> predecessorNode(Node<E> node){
         //当前节点是null，或者是根节点
         if(node == null || node.parent == null){
             System.out.println("传递节点是null，或者是根节点");
-            return ;
+            return null;
         }
 
         //输出传递节点的信息
@@ -597,13 +638,13 @@ public class BinarySearchTree<E>{
                 //如果父节点是null就没有前驱节点
                 if(parentNode == null){
                     System.out.println("没有前驱节点!");
-                    return;
+                    return null;
                 }
 
                 //如果当前节点是父节点的右子树，那么前驱节点就是父节点
                 if(parentNode.right == node){
-                    System.out.println("传递节点的前驱节点是 : " + node.parent.element.toString());
-                    return;
+                    System.out.println("传递节点的前驱节点是 : " + parentNode.element.toString());
+                    return parentNode;
                 }
 
                 //当前节点赋值当前父节点
@@ -624,7 +665,7 @@ public class BinarySearchTree<E>{
                 //节点为null直接退出循环
                 if(node == null){
                     System.out.println("传递节点的前驱节点是 : " + parentNode.element.toString());
-                    break;
+                    return parentNode;
                 }
                 //把当前节点，赋值给父节点
                 parentNode = node;
@@ -639,11 +680,11 @@ public class BinarySearchTree<E>{
      * 后继节点
      * 中序遍历时的后一个节点
      */
-    public void successorNode(Node<E> node){
+    public Node<E> successorNode(Node<E> node){
         //传递节点是null ，或者根节点
         if(node == null || node.parent == null){
             System.out.println("传递节点是null，或者是根节点");
-            return ;
+            return null;
         }
 
         //输出传递节点的信息
@@ -661,12 +702,12 @@ public class BinarySearchTree<E>{
                 //父节点为null就没有后继节点
                 if(parentNode == null){
                     System.out.println("没有后继节点");
-                    return;
+                    return null;
                 }
                 //父节点的左子节点是当前节点，那么父节点就是后继节点
                 if(parentNode.left == node){
                     System.out.println("传递节点的后继节点是 : " + parentNode.element.toString());
-                    return;
+                    return parentNode;
                 }
 
                 //当前节点赋值父节点
@@ -687,7 +728,7 @@ public class BinarySearchTree<E>{
                 //当前节点为null就直接退出
                 if(node == null){
                     System.out.println("传递节点的后继节点是 : " + parentNode.element.toString());
-                    return ;
+                    return parentNode;
                 }
 
                 //把当前节点赋值给父节点
