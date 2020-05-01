@@ -49,7 +49,8 @@ public class BinarySearchTree<E>{
      * 清空
      */
     void clear(){
-
+        rootNode = null;
+        size = 0;
     }
 
     /**
@@ -222,8 +223,8 @@ public class BinarySearchTree<E>{
     /**
      * 是否包含该元素
      */
-    boolean contains(){
-        return false;
+    boolean contains(E element){
+        return getNode(element) != null ? true : false;
     }
 
     /**
