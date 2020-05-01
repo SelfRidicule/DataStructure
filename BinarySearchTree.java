@@ -1,4 +1,4 @@
-package com.ssm.controller.base;
+package com.ssm.controller.tree;
 
 import com.alibaba.druid.sql.ast.statement.SQLUnionQuery;
 
@@ -129,7 +129,51 @@ public class BinarySearchTree<E>{
             return;
         }
 
+        //删除度为2的节点
+        if(node.ownTwoChildren()){
+            //当前节点==>>后继节点
+            Node<E> successorNode = successorNode(node);
+            //用后继节点的元素覆盖度为2的节点元素
+            node.element = successorNode.element;
+            //被删除的节点设置为后继节点
+            node = successorNode;
+        }
 
+        //replaceNode节点（node的度必然是1或0）
+        Node<E> replaceNode = node.left != null ? node.left : node.right;
+        //不是叶子节点
+        if(replaceNode != null){
+            //node.child.parent  = node.parent
+            replaceNode.parent = node.parent;
+
+            //node是度为1的节点，并且是根节点
+            if(node.parent == null){
+                rootNode = replaceNode;
+
+            //被删除节点，是父节点的左子节点
+            } else if(node == node.parent.left){
+                node.parent.left = replaceNode;
+
+            //被删除节点，是父节点的右子节点
+            }else{
+                node.parent.right = replaceNode;
+            }
+
+        //node是叶子节点，并且是根节点
+        }else if(node.parent == null){
+            rootNode = null;
+
+        //node是叶子节点，并且不是父节点
+        }else{
+            //node是父节点的左子节点==>>删除父节点的左子节点
+            if(node.parent.left == node){
+                node.parent.left = null;
+
+            //node是父节点的右子节点==>>删除父节点的右子节点
+            }else{
+                node.parent.right = null;
+            }
+        }
 
         //总数-1
         size--;
@@ -619,8 +663,8 @@ public class BinarySearchTree<E>{
      */
     public Node<E> predecessorNode(Node<E> node){
         //当前节点是null，或者是根节点
-        if(node == null || node.parent == null){
-            System.out.println("传递节点是null，或者是根节点");
+        if(node == null){
+            System.out.println("传递节点是null");
             return null;
         }
 
@@ -682,8 +726,8 @@ public class BinarySearchTree<E>{
      */
     public Node<E> successorNode(Node<E> node){
         //传递节点是null ，或者根节点
-        if(node == null || node.parent == null){
-            System.out.println("传递节点是null，或者是根节点");
+        if(node == null){
+            System.out.println("传递节点是null");
             return null;
         }
 
