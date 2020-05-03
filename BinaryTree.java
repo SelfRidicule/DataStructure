@@ -15,6 +15,13 @@ public class BinaryTree<E> {
 
 
     /**
+     * 创建node节点
+     */
+    public Node<E> createNode(E element, Node<E> parent){
+       return  new Node<E>(element,  parent);
+    }
+
+    /**
      * 总数
      */
     int size(){
@@ -558,11 +565,19 @@ public class BinaryTree<E> {
             this.parent = parent;
         }
 
+        //元素
         E element;
+        //父节点
         Node<E> parent;
+        //左子节点
         Node<E> left;
+        //右子节点
         Node<E> right;
 
+
+        /**
+         * 得到当前节点元素
+         */
         public E getElement(){
             return element;
         }

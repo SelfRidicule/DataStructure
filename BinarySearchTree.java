@@ -36,8 +36,11 @@ public class BinarySearchTree<E> extends BinaryTree<E>{
 
         //如果添加的是根节点
         if(rootNode == null){
-            rootNode = new Node<>(element , null);
+            rootNode = createNode(element , null);
             size++;
+
+            //添加之后进行平衡
+            addAfterBalance(rootNode);
             return;
         }
 
@@ -72,7 +75,7 @@ public class BinarySearchTree<E> extends BinaryTree<E>{
         }
 
         //创建添加的元素节点
-        Node<E> addNode = new Node<>(element, parentNode);
+        Node<E> addNode = createNode(element, parentNode);
         //根据判断的大小决定添加元素的左右
         //大于0==>>右子节点
         if(compareValue > 0){
@@ -83,9 +86,17 @@ public class BinarySearchTree<E> extends BinaryTree<E>{
             parentNode.left = addNode;
         }
 
+        //添加之后进行平衡
+        addAfterBalance(addNode);
+
         //总数+1
         size++;
     }
+
+    /**
+     * 添加之后进行平衡
+     */
+    void addAfterBalance(Node<E> node){}
 
     /**
      * 删除指定元素
