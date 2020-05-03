@@ -595,6 +595,20 @@ public class BinaryTree<E> {
         public boolean ownTwoChildren(){
             return left != null && right != null ;
         }
+
+        /**
+         *  是父节点的左子树
+         */
+        public boolean isLeftChild(){
+            return parent != null && parent.left == left;
+        }
+
+        /**
+         * 是父节点的右子树
+         */
+        public boolean isRightChild(){
+            return parent != null && parent.right == right;
+        }
     }
 
     /**
