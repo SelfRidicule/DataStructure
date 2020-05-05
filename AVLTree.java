@@ -60,7 +60,7 @@ public class AVLTree<E> extends BinarySearchTree<E>{
     /**
      * 更新节点高度
      */
-    private void updateNodeHeight(Node<E> node){
+    public void updateNodeHeight(Node<E> node){
         ((AVLNode<E>) node).updateNodeHeight();
     }
 
@@ -162,6 +162,24 @@ public class AVLTree<E> extends BinarySearchTree<E>{
         //更新高度,从低向高更新
         updateNodeHeight(grand);
         updateNodeHeight(parent);
+    }
+
+    /**
+     * toString
+     */
+    @Override
+    public String toString() {
+        StringBuffer sf = new StringBuffer();
+        toString(getRootNode() , sf , "");
+        return sf.toString();
+    }
+    private void toString(Node<E> node , StringBuffer sf , String prefix){
+        if(node == null){
+            return;
+        }
+        toString(node.left , sf , prefix+"L---");
+        sf.append(prefix).append(node.element.toString()+"_h("+ ((AVLNode<E>)node).height+")").append("\n");
+        toString(node.right , sf , prefix+"R---");
     }
 
     /**
