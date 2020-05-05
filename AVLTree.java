@@ -117,13 +117,35 @@ public class AVLTree<E> extends BinarySearchTree<E>{
         //
         grand.right = child;
         parent.left = grand;
+        //旋转操作
+        afterRotate( grand,  parent,  child);
+    }
+
+    /**
+     * LL-右旋转
+     */
+    public void rotateRight(Node<E> grand){
+        //
+        Node<E> parent = grand.left;
+        Node<E> child = parent.right;
+        //
+        grand.left = child;
+        parent.right = grand;
+        //旋转操作
+        afterRotate( grand,  parent,  child);
+    }
+
+    /**
+     *  旋转操作
+     */
+    public void afterRotate(Node<E> grand, Node<E> parent, Node<E> child){
         //parent成为子树的根节点
         parent.parent = grand.parent;
         //祖先节点是左子树
         if(grand.isLeftChild()){
             grand.parent.left = parent;
 
-        //祖先节点是右子树
+            //祖先节点是右子树
         }else if(grand.isRightChild()){
             grand.parent.right = parent;
         }else{  //parent是根节点
@@ -140,13 +162,6 @@ public class AVLTree<E> extends BinarySearchTree<E>{
         //更新高度,从低向高更新
         updateNodeHeight(grand);
         updateNodeHeight(parent);
-    }
-
-    /**
-     * LL-右旋转
-     */
-    public void rotateRight(Node<E> node){
-
     }
 
     /**

@@ -600,14 +600,14 @@ public class BinaryTree<E> {
          *  是父节点的左子树
          */
         public boolean isLeftChild(){
-            return parent != null && parent.left == left;
+            return parent != null && parent.left == this;
         }
 
         /**
          * 是父节点的右子树
          */
         public boolean isRightChild(){
-            return parent != null && parent.right == right;
+            return parent != null && parent.right == this;
         }
     }
 
