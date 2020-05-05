@@ -73,6 +73,88 @@ public class AVLTree<E> extends BinarySearchTree<E>{
      * LR-左旋转再右旋转
      * RL-右旋转再左旋转
      */
+    private void simpleReBalance(Node<E> grand){
+        Node<E> parent = ((AVLNode<E>)grand).tallerChild();
+        Node<E> node = ((AVLNode<E>)parent).tallerChild();
+        //L
+        if(parent.isLeftChild()){
+            if(node.isLeftChild()){ //LL-右旋转
+
+            }else{  //LR-左旋转再右旋转
+
+            }
+        //R
+        }else{
+            if(node.isLeftChild()){ //RL-右旋转再左旋转
+
+            }else{  //RR-左旋转
+
+            }
+        }
+    }
+
+    /**
+     *
+     */
+    private void simpleRotate(
+                                Node<E> r, //子树的根节点
+                                Node<E> a, Node<E> b, Node<E> c,
+                                Node<E> d,
+                                Node<E> e, Node<E> f, Node<E> g
+                            ){
+        //d设置为子树的根节点，并且更新引用
+        d.parent = r.parent;
+        if(r.isLeftChild()){
+            r.parent.left = d;
+
+        }else if(r.isRightChild()){
+            r.parent.right = d;
+        }else{
+            rootNode = d;
+        }
+
+        //a-b-c
+        b.left = a;
+        if(a != null){
+            a.parent = b;
+        }
+        b.right = c;
+        if(c != null){
+            c.parent = b;
+        }
+        //更新高度
+        updateNodeHeight(b);
+
+        //e-f-g
+        f.left = e;
+        if(e != null){
+            e.parent = f;
+        }
+        f.right = g;
+        if(g != null){
+            g.parent = f;
+        }
+        //更新高度
+        updateNodeHeight(f);
+
+        //b-d-f
+        d.left = b;
+        d.right = f;
+        b.parent = d;
+        f.parent = d;
+        //更新高度
+        updateNodeHeight(d);
+    }
+
+    /**
+     * 恢复平衡
+     * 传递的grandNode是高度最低的不平衡节点
+     *
+     * LL-右旋转
+     * RR-左旋转
+     * LR-左旋转再右旋转
+     * RL-右旋转再左旋转
+     */
     private void reBalance(Node<E> grand){
         Node<E> parent = ((AVLNode<E>)grand).tallerChild();
         Node<E> node = ((AVLNode<E>)parent).tallerChild();
