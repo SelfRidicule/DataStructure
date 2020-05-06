@@ -35,7 +35,8 @@ public class AVLTree<E> extends BinarySearchTree<E>{
             //不平衡-恢复平衡
             }else{
                 //恢复平衡
-                reBalance(node);
+//                reBalance(node);
+                simpleReBalance(node);
                 break;
             }
         }
@@ -79,16 +80,16 @@ public class AVLTree<E> extends BinarySearchTree<E>{
         //L
         if(parent.isLeftChild()){
             if(node.isLeftChild()){ //LL-右旋转
-
+                simpleRotate(grand, node.left, node, node.right, parent, parent.right, grand, grand.right);
             }else{  //LR-左旋转再右旋转
-
+                simpleRotate(grand, parent.left, parent, node.left, node, node.right, grand, grand.right);
             }
         //R
         }else{
             if(node.isLeftChild()){ //RL-右旋转再左旋转
-
+                simpleRotate(grand, grand.left, grand, node.left, node, node.right, parent, parent.right);
             }else{  //RR-左旋转
-
+                simpleRotate(grand, grand.left, grand, parent.left, parent, node.left, node, node.right);
             }
         }
     }
