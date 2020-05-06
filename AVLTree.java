@@ -42,6 +42,24 @@ public class AVLTree<E> extends BinarySearchTree<E>{
         }
     }
 
+    @Override
+    void removeAfterBalance(Node<E> node) {
+        while ((node = node.parent) != null){
+            //平衡-更新高度
+            if(isBalanced(node)){
+                //更新父节点高度
+                updateNodeHeight(node);
+
+                //不平衡-恢复平衡
+            }else{
+                //恢复平衡
+//                reBalance(node);
+                simpleReBalance(node);
+                break;
+            }
+        }
+    }
+
     /**
      * 创建节点
      * 重写是为了设置高度和计算平衡因子

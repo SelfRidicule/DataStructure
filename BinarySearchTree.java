@@ -99,6 +99,11 @@ public class BinarySearchTree<E> extends BinaryTree<E>{
     void addAfterBalance(Node<E> node){}
 
     /**
+     * 删除之后进行平衡
+     */
+    void removeAfterBalance(Node<E> node){}
+
+    /**
      * 删除指定元素
      */
     public void remove(E element){
@@ -160,6 +165,9 @@ public class BinarySearchTree<E> extends BinaryTree<E>{
                 node.parent.right = null;
             }
         }
+
+        //删除后平衡
+        removeAfterBalance(node);
 
         //总数-1
         size--;
