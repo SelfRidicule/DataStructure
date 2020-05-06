@@ -50,12 +50,11 @@ public class AVLTree<E> extends BinarySearchTree<E>{
                 //更新父节点高度
                 updateNodeHeight(node);
 
-                //不平衡-恢复平衡
+            //不平衡-恢复平衡
             }else{
                 //恢复平衡
 //                reBalance(node);
                 simpleReBalance(node);
-                break;
             }
         }
     }
