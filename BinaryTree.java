@@ -609,6 +609,22 @@ public class BinaryTree<E> {
         public boolean isRightChild(){
             return parent != null && parent.right == this;
         }
+
+        /**
+         * 得到兄弟节点
+         */
+        public Node<E> sibling(){
+            //是父节点的左子节点就返回右子节点
+            if(isLeftChild()){
+                return parent.right;
+            }
+            //是父节点的右子节点就返回左子节点
+            if(isRightChild()){
+                return parent.left;
+            }
+            //没有父节点
+            return null;
+        }
     }
 
     /**
