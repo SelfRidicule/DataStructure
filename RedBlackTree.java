@@ -5,7 +5,7 @@ import java.util.Comparator;
 /**
  * 红黑树
  */
-public class RedBlackTree<E> extends BinarySearchTree<E>{
+public class RedBlackTree<E> extends BalanceBinarySearchTree<E>{
     //
     private static final boolean RED = false;
     //
@@ -31,7 +31,66 @@ public class RedBlackTree<E> extends BinarySearchTree<E>{
      */
     @Override
     void addAfterBalance(Node<E> node) {
+        //得到父节点
+        Node<E> parent = node.parent;
 
+        //添加的是根节点
+        if(parent == null){
+            blackColor(node);
+            return ;
+        }
+
+        //父节点是黑色
+        if(isBlackColor(parent)){
+            return ;
+        }
+
+        //叔父节点
+        Node<E> uncle = parent.sibling();
+        //祖父节点
+        Node<E> grand = redColor(parent.parent);
+
+        //叔父节点是红色
+        if(isRedColor(uncle)){
+            //把父节点和叔父节点染成黑色
+            blackColor(parent);
+            blackColor(uncle);
+            //把祖父节点当做是新添加的节点
+            addAfterBalance(grand);
+            return ;
+        }
+
+        //叔父节点不是红色
+        if(parent.isLeftChild()){   // L
+
+            if(node.isLeftChild()){ // LL
+                //父节点染成黑色
+                blackColor(parent);
+
+            }else{  // LR
+                //当前节点染成黑色
+                blackColor(node);
+                //父节点左旋转
+                rotateLeft(parent);
+            }
+            //右旋转
+            rotateRight(grand);
+
+        }else{  // R
+
+            if(node.isLeftChild()){ // RL
+                //当前节点染成黑色
+                blackColor(node);
+                //父节点右旋转
+                rotateRight(parent);
+
+            }else{  // RR
+                //父节点染成黑色
+                blackColor(parent);
+            }
+            //祖父节点左旋转
+            rotateLeft(grand);
+        }
     }
 
     /**
@@ -40,6 +99,29 @@ public class RedBlackTree<E> extends BinarySearchTree<E>{
     @Override
     void removeAfterBalance(Node<E> node) {
 
+    }
+
+    @Override
+    public Node<E> createNode(E element, Node<E> parent) {
+        return new RBNode<E>(element, parent);
+    }
+
+    /**
+     * toString
+     */
+    @Override
+    public String toString() {
+        StringBuffer sf = new StringBuffer();
+        toString( (RBNode)getRootNode() , sf , "");
+        return sf.toString();
+    }
+    private void toString(RBNode<E> node , StringBuffer sf , String prefix){
+        if(node == null){
+            return;
+        }
+        toString( (RBNode)node.left , sf , prefix+"L---");
+        sf.append(prefix).append(node.toString()).append("\n");
+        toString( (RBNode)node.right , sf , prefix+"R---");
     }
 
     /**
@@ -85,16 +167,25 @@ public class RedBlackTree<E> extends BinarySearchTree<E>{
         return colorOf(node) == BLACK;
     }
 
+
     /**
      * RedBlackTreeNode
      */
     class RBNode<E> extends Node<E>{
-        //
-        boolean color;
+        //default RED
+        boolean color = RED;
         /**
          * 构造方法
          */
         public RBNode(E element, Node<E> parent) { super(element, parent); }
 
+        @Override
+        public String toString() {
+            String str = "";
+            if(color == RED){
+                str = "red_";
+            }
+            return str + element.toString();
+        }
     }
 }
