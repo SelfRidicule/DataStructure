@@ -97,8 +97,27 @@ public class RedBlackTree<E> extends BalanceBinarySearchTree<E>{
      * 删除之后进行平衡
      */
     @Override
-    void removeAfterBalance(Node<E> node) {
+    void removeAfterBalance(Node<E> node, Node<E> replaceNode) {
+        //删除的节点是红色就直接删除
+        if(isRedColor(node)){
+            return ;
+        }
 
+        //删除的节点是黑色
+        //取代node节点是红色
+        if(isRedColor(replaceNode)){
+            //把替代节点染成黑色
+            blackColor(replaceNode);
+            return;
+        }
+
+        //删除的是根节点
+        if(node.parent == null){
+           return ;
+        }
+
+        //删除的是黑色叶子节点
+        
     }
 
     @Override
