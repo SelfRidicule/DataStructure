@@ -13,16 +13,18 @@ public class Demo {
             }
         });
 
-        Person person1 = new Person(51);
-        Person person2 = new Person(10);
-        Person person3 = new Person(16);
-        Person person4 = new Person(100);
-        Person person5 = new Person(8);
-        Person person6 = new Person(101);
-        Person person7 = new Person(90);
-        Person person8 = new Person(7);
-        Person person9 = new Person(40);
-        Person person10 = new Person(30);
+        Person person1 = new Person(55);
+        Person person2 = new Person(87);
+        Person person3 = new Person(56);
+        Person person4 = new Person(74);
+        Person person5 = new Person(96);
+        Person person6 = new Person(22);
+        Person person7 = new Person(62);
+        Person person8 = new Person(20);
+        Person person9 = new Person(70);
+        Person person10 = new Person(68);
+        Person person11 = new Person(90);
+        Person person12 = new Person(50);
 
         binarySearchTree.add(person1);
         binarySearchTree.add(person2);
@@ -34,7 +36,11 @@ public class Demo {
         binarySearchTree.add(person8);
         binarySearchTree.add(person9);
         binarySearchTree.add(person10);
+        binarySearchTree.add(person11);
+        binarySearchTree.add(person12);
 
+        binarySearchTree.remove(person1);
+        binarySearchTree.remove(person2);
 //        binarySearchTree.printTree();
 //        binarySearchTree.preorderTraversal();
 //        binarySearchTree.inorderTraversal();

@@ -111,13 +111,110 @@ public class RedBlackTree<E> extends BalanceBinarySearchTree<E>{
             return;
         }
 
+        Node<E> parent = node.parent;
         //删除的是根节点
-        if(node.parent == null){
+        if(parent == null){
            return ;
         }
 
         //删除的是黑色叶子节点
-        
+        //判断被删除的node是左还是右
+        boolean left = parent.left == null || node.isLeftChild();
+        Node<E> sibling = left ? parent.right : parent.left;
+
+        if(left){ //被删除的节点在左边==>>兄弟在右边
+
+            if(isRedColor(sibling)){ //兄弟节点是红色
+                //兄弟染成黑色
+                blackColor(sibling);
+                //父节点染成红色
+                redColor(parent);
+                //父节点进行左旋转
+                rotateLeft(parent);
+                //变换兄弟
+                sibling = parent.right;
+            }
+
+            //兄弟节点必定是黑色
+            //判断兄弟节点的左右子节点都是黑色
+            if(isBlackColor(sibling.left) && isBlackColor(sibling.right)){
+                //判断父节点是否是黑色
+                boolean parentColor = isBlackColor(parent);
+                //父节点向下和兄弟节点合并
+                blackColor(parent);
+                redColor(sibling);
+                //父节点是黑色向下合并会造成下溢，把父节点当做是被删除的节点继续递归
+                if(parentColor){
+                    removeAfterBalance(parent, null);
+                }
+
+            }else{ //兄弟节点至少有一个红色子节点
+                //兄弟节点的左子节点是黑色==>>需要将兄弟节点进行左旋转
+                if(isBlackColor(sibling.right)){ //RL
+                    //兄弟节点进行右旋转
+                    rotateRight(sibling);
+                    //旋转后重新赋值兄弟节点
+                    sibling = parent.right;
+                }
+
+                //继承原先父节点的颜色
+                color(sibling , colorOf(parent));
+                //兄弟节点的右子节点染成黑色
+                blackColor(sibling.right);
+                //父节点染成黑色
+                blackColor(parent);
+
+                //统一进行左旋转 RR
+                rotateLeft(parent);
+            }
+
+        }else{ //被删除的节点在右边==>>兄弟在左边
+
+            if(isRedColor(sibling)){ //兄弟节点是红色
+                //兄弟染成黑色
+                blackColor(sibling);
+                //父节点染成红色
+                redColor(parent);
+                //父节点进行右旋转
+                rotateRight(parent);
+                //变换兄弟
+                sibling = parent.left;
+            }
+
+            //兄弟节点必定是黑色
+            //判断兄弟节点的左右子节点都是黑色
+            if(isBlackColor(sibling.left) && isBlackColor(sibling.right)){
+                //判断父节点是否是黑色
+                boolean parentColor = isBlackColor(parent);
+                //父节点向下和兄弟节点合并
+                blackColor(parent);
+                redColor(sibling);
+                //父节点是黑色向下合并会造成下溢，把父节点当做是被删除的节点继续递归
+                if(parentColor){
+                    removeAfterBalance(parent, null);
+                }
+
+            }else{ //兄弟节点至少有一个红色子节点
+                //兄弟节点的左子节点是黑色==>>需要将兄弟节点进行左旋转
+                if(isBlackColor(sibling.left)){ //LR
+                    //兄弟节点进行左旋转
+                    rotateLeft(sibling);
+                    //旋转后重新赋值兄弟节点
+                    sibling = parent.left;
+                }
+
+                //继承原先父节点的颜色
+                color(sibling , colorOf(parent));
+                //兄弟节点的左子节点染成黑色
+                blackColor(sibling.left);
+                //父节点染成黑色
+                blackColor(parent);
+
+                //统一进行右旋转 LL
+                rotateRight(parent);
+
+            }
+        }
     }
 
     @Override
