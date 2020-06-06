@@ -101,7 +101,7 @@ public class BinarySearchTree<E> extends BinaryTree<E>{
     /**
      * 删除之后进行平衡
      */
-    void removeAfterBalance(Node<E> node, Node<E> replaceNode){}
+    void removeAfterBalance(Node<E> node){}
 
     /**
      * 删除指定元素
@@ -151,13 +151,13 @@ public class BinarySearchTree<E> extends BinaryTree<E>{
             }
 
             //删除后平衡
-            removeAfterBalance(node , replaceNode);
+            removeAfterBalance(replaceNode);
 
         //node是叶子节点，并且是根节点
         }else if(node.parent == null){
             rootNode = null;
             //删除后平衡
-            removeAfterBalance(node, null);
+            removeAfterBalance(node);
 
         //node是叶子节点，并且不是父节点
         }else{
@@ -170,7 +170,7 @@ public class BinarySearchTree<E> extends BinaryTree<E>{
                 node.parent.right = null;
             }
             //删除后平衡
-            removeAfterBalance(node, null);
+            removeAfterBalance(node);
         }
 
         //总数-1

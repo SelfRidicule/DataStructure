@@ -97,17 +97,17 @@ public class RedBlackTree<E> extends BalanceBinarySearchTree<E>{
      * 删除之后进行平衡
      */
     @Override
-    void removeAfterBalance(Node<E> node, Node<E> replaceNode) {
+    void removeAfterBalance(Node<E> node) {
         //删除的节点是红色就直接删除
-        if(isRedColor(node)){
-            return ;
-        }
+//        if(isRedColor(node)){
+//            return ;
+//        }
 
         //删除的节点是黑色
         //取代node节点是红色
-        if(isRedColor(replaceNode)){
+        if(isRedColor(node)){
             //把替代节点染成黑色
-            blackColor(replaceNode);
+            blackColor(node);
             return;
         }
 
@@ -145,7 +145,7 @@ public class RedBlackTree<E> extends BalanceBinarySearchTree<E>{
                 redColor(sibling);
                 //父节点是黑色向下合并会造成下溢，把父节点当做是被删除的节点继续递归
                 if(parentColor){
-                    removeAfterBalance(parent, null);
+                    removeAfterBalance(parent);
                 }
 
             }else{ //兄弟节点至少有一个红色子节点
@@ -191,7 +191,7 @@ public class RedBlackTree<E> extends BalanceBinarySearchTree<E>{
                 redColor(sibling);
                 //父节点是黑色向下合并会造成下溢，把父节点当做是被删除的节点继续递归
                 if(parentColor){
-                    removeAfterBalance(parent, null);
+                    removeAfterBalance(parent);
                 }
 
             }else{ //兄弟节点至少有一个红色子节点
