@@ -17,7 +17,7 @@ public class DynamicArray <E>{
     /**
      * 默认容量
      */
-    private static final int CAPATICY = 10;
+    private static final int CAPACITY = 10;
     /**
      * 不存在
      */
@@ -28,11 +28,11 @@ public class DynamicArray <E>{
      */
     public DynamicArray(int capaticy) {
         //如果传递容量小于默认容量，就使用默认容量
-        capaticy = CAPATICY > capaticy ? CAPATICY : capaticy;
+        capaticy = CAPACITY > capaticy ? CAPACITY : capaticy;
         elements = (E[]) new Object[capaticy];
     }
     public DynamicArray() {
-        this(CAPATICY);
+        this(CAPACITY);
     }
 
 
@@ -58,6 +58,13 @@ public class DynamicArray <E>{
      */
     public int size(){
         return size;
+    }
+
+    /**
+     * 数组容量
+     */
+    public int length(){
+        return elements.length;
     }
 
     /**
@@ -95,22 +102,49 @@ public class DynamicArray <E>{
      * 添加
      */
     public void add(E element){
-        elements[size] = element;
-        size++;
+        add(size,  element);
     }
 
     /**
      * 指定位置添加
      */
     public void add(int index, E element){
+        //判断传递下标是否正确
+        if(index < 0 || index > size){
+            throw new IndexOutOfBoundsException("传递下标不正确");
+        }
+        //扩容
+        expansion();
 
+        //指定位置到末尾 往后加1
+        for (int i = size - 1; i >= index; i--) {
+            elements[i+1] = elements[i];
+        }
+        //添加指定位置的元素
+        elements[index] = element;
+        //总数加1
+        size++;
     }
 
     /**
      * 扩容
      */
     private void expansion(){
-
+        //数组未被填充满
+        if(size < elements.length){
+            return ;
+        }
+        System.out.println("进行扩容");
+        //进行扩容 当前容量 * 2
+        int newCapaticy = elements.length << 1;
+        //新扩容的数组
+        E newElements[] = (E[]) new Object[newCapaticy];
+        //循环进行重新赋值
+        for (int i = 0; i < elements.length; i++) {
+            newElements[i] = elements[i];
+        }
+        //覆盖原先的数组
+        elements = newElements;
     }
 
     /**
