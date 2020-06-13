@@ -172,6 +172,13 @@ public class DynamicArray <E>{
     }
 
     /**
+     * 删除指定的元素
+     */
+    public E remove(E element){
+        return remove(indexOf(element));
+    }
+
+    /**
      * 返回元素的下标
      */
     public int indexOf(E element){
