@@ -163,6 +163,8 @@ public class DynamicArray <E>{
         for (int i = index; i < elements.length -1; i++) {
             elements[i] = elements[i+1];
         }
+        //清空最后一位地址
+        elements[elements.length - 1] = null;
         //总数-1
         size--;
         //返回被删除的元素
@@ -173,10 +175,20 @@ public class DynamicArray <E>{
      * 返回元素的下标
      */
     public int indexOf(E element){
-        //循环判断
-        for (int i = 0; i < elements.length; i++) {
-            if(elements[i].equals(element)){
-                return i;
+        //传递的元素是null
+        if(element == null){
+            //循环判断
+            for (int i = 0; i < elements.length; i++) {
+                if(elements[i] == null){
+                    return i;
+                }
+            }
+        }else{
+            //循环判断
+            for (int i = 0; i < elements.length; i++) {
+                if(element.equals(elements[i])){
+                    return i;
+                }
             }
         }
         //不存在
