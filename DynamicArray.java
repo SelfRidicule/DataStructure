@@ -51,6 +51,10 @@ public class DynamicArray <E>{
      */
     public void clear(){
         size = 0;
+        //循环清空内存地址
+        for (int i = 0; i < elements.length; i++) {
+            elements[i] = null;
+        }
     }
 
     /**
